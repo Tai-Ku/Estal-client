@@ -1,10 +1,20 @@
+import clsx from "clsx";
 import React from "react";
 import { AiOutlineMail, AiOutlinePhone } from "react-icons/ai";
 import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
+import { twMerge } from "tailwind-merge";
+import withRouter from "~/hocs/withRouter";
 
-const TopHeader = () => {
+const TopHeader = ({ location }) => {
   return (
-    <div className="h-[85px] text-white border-b border-primary-400 w-full bg-transparent flex items-center justify-between fixed z-50 top-0 px-[100px] py-[26px]">
+    <div
+      className={twMerge(
+        clsx(
+          "h-[85px] text-white border-b border-primary-400 w-full bg-transparent flex items-center justify-between fixed z-50 top-0 px-[100px] py-[26px]",
+          location.pathname !== "/" && "bg-primary-700"
+        )
+      )}
+    >
       <div className="flex items-center gap-2">
         <AiOutlineMail />
         <div>
@@ -13,20 +23,20 @@ const TopHeader = () => {
         </div>
       </div>
       <div className="flex items-center gap-6">
-        <div className="flex items-center text-xl text-gray-300 gap-6">
+        <div className="flex items-center text-gray-300 gap-6">
           <FaFacebookF />
-          <FaInstagram />
-          <FaYoutube />
+          <FaInstagram size={18} />
+          <FaYoutube size={20} />
         </div>
         <div className="flex items-center pl-8 border-l border-primary-400">
-          <spa className="flex items-center gap-2">
+          <span className="flex items-center gap-2">
             <AiOutlinePhone />
             <span className="text-gray-300">123-456 789</span>
-          </spa>
+          </span>
         </div>
       </div>
     </div>
   );
 };
 
-export default TopHeader;
+export default withRouter(TopHeader);
