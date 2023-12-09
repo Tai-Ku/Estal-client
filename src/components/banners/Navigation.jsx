@@ -1,12 +1,16 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
-import { Button } from "..";
+import { Button, Login } from "..";
 import { navigations } from "~/untils/constant";
 import clsx from "clsx";
 import withRouter from "~/hocs/withRouter";
 import { twMerge } from "tailwind-merge";
+import { useUserStore } from "~/store/useUserStore";
+import { useAppStore } from "~/store/useAppStore";
 
-const Navigation = ({ location }) => {
+const Navigation = ({ location, navigate }) => {
+  const { token } = useUserStore();
+  const { setModal } = useAppStore();
   return (
     <div
       className={twMerge(
@@ -39,16 +43,31 @@ const Navigation = ({ location }) => {
             {item.text}
           </NavLink>
         ))}
-        <Button
-          className={twMerge(
-            clsx(
-              location.pathname === "/" &&
-                "bg-transparent border border-primary-100"
-            )
-          )}
-        >
-          Add Listing
-        </Button>
+
+        {!token ? (
+          <Button
+            onClick={() => setModal(true, <Login />)}
+            className={twMerge(
+              clsx(
+                location.pathname === "/" &&
+                  "bg-transparent border border-primary-100"
+              )
+            )}
+          >
+            Sign in
+          </Button>
+        ) : (
+          <Button
+            className={twMerge(
+              clsx(
+                location.pathname === "/" &&
+                  "bg-transparent border border-primary-100"
+              )
+            )}
+          >
+            Add Listing
+          </Button>
+        )}
       </div>
     </div>
   );

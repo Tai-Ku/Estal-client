@@ -9,10 +9,14 @@ import {
   PublicLayout,
   Search,
 } from "./pages/public";
+import { Modal } from "./components";
+import { useAppStore } from "./store/useAppStore";
 
 function App() {
+  const { isShowModal } = useAppStore();
   return (
-    <div>
+    <>
+      {isShowModal && <Modal />}
       <Routes>
         <Route path={path.PUBLIC_LAYOUT} element={<PublicLayout />}>
           <Route path={path.HOME} element={<Home />} />
@@ -22,7 +26,7 @@ function App() {
           <Route path={path.PROPERTIES} element={<Properties />} />
         </Route>
       </Routes>
-    </div>
+    </>
   );
 }
 

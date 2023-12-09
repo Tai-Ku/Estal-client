@@ -4,7 +4,11 @@ const Home = () => {
   return (
     <div className="bg-white w-full">
       <div className="w-full h-fit relative">
-        <img src="/banner.png" alt="banner" />
+        <img
+          src="/banner.png"
+          alt="banner"
+          className="w-full h-[752px] object-cover"
+        />
         <div className="absolute inset-0 flex pt-8 flex-col gap-4 items-center justify-center">
           <h1 className="text-5xl text-white">Find Your Dream Home</h1>
           <p className="text-white text-lg max-w-3xl text-center">

@@ -5,7 +5,6 @@ import withRouter from "~/hocs/withRouter";
 import clsx from "clsx";
 
 const PublicLayout = ({ location }) => {
-  console.log({ location });
   return (
     <main>
       <TopHeader />
