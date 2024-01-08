@@ -1,9 +1,13 @@
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
-import { Button, InputForm } from "..";
+import { Button, InputForm, InputRadio } from "..";
 import { useForm } from "react-hook-form";
+import { apiLogin, apiRegister } from "~/apis/auth";
+import { toast } from "react-toastify";
+import { useAppStore } from "~/store/useAppStore";
 
-const Login = () => {
+const Login = ({ navigate }) => {
+  const { setModal } = useAppStore();
   const [variant, setVariant] = useState("LOGIN");
   const {
     register,
@@ -18,8 +22,26 @@ const Login = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [variant]);
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    if (variant === "LOGIN") {
+      const res = await apiLogin(data);
+
+      if (res.success) {
+        setModal(false);
+        return toast.success(res.message);
+      }
+
+      return toast.error(res.message);
+    }
+
+    const res = await apiRegister(data);
+
+    if (res.success) {
+      setVariant("LOGIN");
+      return toast.success(res.message);
+    }
+
+    return toast.error(res.message);
   };
 
   return (
@@ -59,10 +81,15 @@ const Login = () => {
           label="Phone Number"
           inputClassName="rounded-md"
           register={register}
-          validate={{ required: "Field is required" }}
+          validate={{
+            required: "Field is required",
+            pattern: {
+              value: /^\d+$/,
+              message: "Phone number invalid",
+            },
+          }}
           error={errors}
         />
-
         <InputForm
           id="password"
           placeholder="Type your password"
@@ -76,7 +103,7 @@ const Login = () => {
 
         {variant === "REGISTER" && (
           <InputForm
-            id="fullName"
+            id="name"
             placeholder="Type your full name"
             label="Your Full Name"
             inputClassName="rounded-md"
@@ -85,6 +112,27 @@ const Login = () => {
               variant === "REGISTER" && { required: "Field is required" }
             }
             error={errors}
+          />
+        )}
+
+        {variant === "REGISTER" && (
+          <InputRadio
+            id="role"
+            label="Type account"
+            register={register}
+            validate={{ required: "Field is required" }}
+            error={errors}
+            option={[
+              {
+                label: "User",
+                value: "USER",
+              },
+              {
+                label: "Agent",
+                value: "AGENT",
+              },
+            ]}
+            onChange={(e) => console.log(e.target.value)}
           />
         )}
 

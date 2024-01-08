@@ -1,6 +1,8 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import path from "./untils/path";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   About,
   Home,
@@ -26,6 +28,11 @@ function App() {
           <Route path={path.PROPERTIES} element={<Properties />} />
         </Route>
       </Routes>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={1250}
+        theme="colored"
+      />
     </>
   );
 }
