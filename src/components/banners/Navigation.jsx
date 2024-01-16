@@ -11,6 +11,7 @@ import { useAppStore } from "~/store/useAppStore";
 const Navigation = ({ location, navigate }) => {
   const { token } = useUserStore();
   const { setModal } = useAppStore();
+
   return (
     <div
       className={twMerge(
@@ -57,7 +58,18 @@ const Navigation = ({ location, navigate }) => {
             Sign in
           </Button>
         ) : (
+          // <Button
+          //   className={twMerge(
+          //     clsx(
+          //       location.pathname === "/" &&
+          //         "bg-transparent border border-primary-100"
+          //     )
+          //   )}
+          // >
+          //   Add Listing
+          // </Button>
           <Button
+            onClick={() => setModal(true, <Login />)}
             className={twMerge(
               clsx(
                 location.pathname === "/" &&
@@ -65,7 +77,7 @@ const Navigation = ({ location, navigate }) => {
               )
             )}
           >
-            Add Listing
+            Sign in
           </Button>
         )}
       </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import path from "./untils/path";
 import { ToastContainer } from "react-toastify";
@@ -13,9 +13,17 @@ import {
 } from "./pages/public";
 import { Modal } from "./components";
 import { useAppStore } from "./store/useAppStore";
+import { useUserStore } from "./store/useUserStore";
 
 function App() {
   const { isShowModal } = useAppStore();
+  const { getProFileUser, token, user } = useUserStore();
+  useEffect(() => {
+    getProFileUser();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
+
   return (
     <>
       {isShowModal && <Modal />}

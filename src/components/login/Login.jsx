@@ -5,10 +5,13 @@ import { useForm } from "react-hook-form";
 import { apiLogin, apiRegister } from "~/apis/auth";
 import { toast } from "react-toastify";
 import { useAppStore } from "~/store/useAppStore";
+import { useUserStore } from "~/store/useUserStore";
 
 const Login = ({ navigate }) => {
   const { setModal } = useAppStore();
+  const { token, setToken } = useUserStore();
   const [variant, setVariant] = useState("LOGIN");
+  const [isLoading, setIsLoading] = useState();
   const {
     register,
     formState: { errors },
@@ -23,11 +26,13 @@ const Login = ({ navigate }) => {
   }, [variant]);
 
   const onSubmit = async (data) => {
+    setIsLoading(true);
     if (variant === "LOGIN") {
       const res = await apiLogin(data);
 
       if (res.success) {
         setModal(false);
+        setToken(res.accessToken);
         return toast.success(res.message);
       }
 
@@ -40,6 +45,7 @@ const Login = ({ navigate }) => {
       setVariant("LOGIN");
       return toast.success(res.message);
     }
+    setIsLoading(false);
 
     return toast.error(res.message);
   };
@@ -136,7 +142,11 @@ const Login = ({ navigate }) => {
           />
         )}
 
-        <Button onClick={handleSubmit(onSubmit)} className="py-2 my-6">
+        <Button
+          onClick={handleSubmit(onSubmit)}
+          className="py-2 my-6 text-center"
+          loading={isLoading}
+        >
           {variant === "LOGIN" ? "Sign In" : "Register"}
         </Button>
 
