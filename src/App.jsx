@@ -14,10 +14,16 @@ import {
 import { Modal } from "./components";
 import { useAppStore } from "./store/useAppStore";
 import { useUserStore } from "./store/useUserStore";
+import {
+  AdminLayout,
+  CreatePropertyType,
+  Dashboard,
+  ManagePropertyType,
+} from "./pages/admin";
 
 function App() {
   const { isShowModal } = useAppStore();
-  const { getProFileUser, token, user } = useUserStore();
+  const { getProFileUser, token } = useUserStore();
   useEffect(() => {
     getProFileUser();
 
@@ -34,6 +40,19 @@ function App() {
           <Route path={path.OUR_AGENTS} element={<OurAgents />} />
           <Route path={path.SEARCH} element={<Search />} />
           <Route path={path.PROPERTIES} element={<Properties />} />
+        </Route>
+
+        {/* Admin Router */}
+        <Route path={path.ADMIN_LAYOUT} element={<AdminLayout />}>
+          <Route path={path.DASHBOARD} element={<Dashboard />} />
+          <Route
+            path={path.CREATE_PROPERTY_TYPE}
+            element={<CreatePropertyType />}
+          />
+          <Route
+            path={path.MANAGE_PROPERTY_TYPE}
+            element={<ManagePropertyType />}
+          />
         </Route>
       </Routes>
       <ToastContainer

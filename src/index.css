@@ -5,7 +5,10 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
+html {
+  font-size: 14px;
+}
+
 body {
   height: 100%;
 }
