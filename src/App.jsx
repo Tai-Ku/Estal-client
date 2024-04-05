@@ -23,9 +23,10 @@ import {
 
 function App() {
   const { isShowModal } = useAppStore();
-  const { getProFileUser, token } = useUserStore();
+  const { getProFileUser, getRoles, token } = useUserStore();
   useEffect(() => {
     getProFileUser();
+    getRoles();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);

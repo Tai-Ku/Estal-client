@@ -2,14 +2,14 @@ import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import { Button, InputForm, InputRadio } from "..";
 import { useForm } from "react-hook-form";
-import { apiLogin, apiRegister } from "~/apis/auth";
+import { apiGetRoles, apiLogin, apiRegister } from "~/apis/auth";
 import { toast } from "react-toastify";
 import { useAppStore } from "~/store/useAppStore";
 import { useUserStore } from "~/store/useUserStore";
 
 const Login = ({ navigate }) => {
   const { setModal } = useAppStore();
-  const { token, setToken } = useUserStore();
+  const { setToken, roles } = useUserStore();
   const [variant, setVariant] = useState("LOGIN");
   const [isLoading, setIsLoading] = useState();
   const {
@@ -26,29 +26,40 @@ const Login = ({ navigate }) => {
   }, [variant]);
 
   const onSubmit = async (data) => {
-    setIsLoading(true);
-    if (variant === "LOGIN") {
-      const res = await apiLogin(data);
+    try {
+      setIsLoading(true);
+      if (variant === "LOGIN") {
+        const res = await apiLogin(data);
+
+        if (res.success) {
+          setModal(false);
+          setToken(res.accessToken);
+          return toast.success(res.message);
+        }
+
+        return toast.error(res.message);
+      }
+
+      const res = await apiRegister(data);
 
       if (res.success) {
-        setModal(false);
-        setToken(res.accessToken);
+        setVariant("LOGIN");
+
         return toast.success(res.message);
       }
 
       return toast.error(res.message);
+    } finally {
+      setIsLoading(false);
     }
-
-    const res = await apiRegister(data);
-
-    if (res.success) {
-      setVariant("LOGIN");
-      return toast.success(res.message);
-    }
-    setIsLoading(false);
-
-    return toast.error(res.message);
   };
+
+  const OPTION_ROLES = roles
+    .filter((item) => item.code !== "ROL1")
+    .map((item) => ({
+      label: item.value,
+      value: item.code,
+    }));
 
   return (
     <div
@@ -123,22 +134,14 @@ const Login = ({ navigate }) => {
 
         {variant === "REGISTER" && (
           <InputRadio
-            id="role"
+            id="roleCode"
             label="Type account"
             register={register}
             validate={{ required: "Field is required" }}
             error={errors}
-            option={[
-              {
-                label: "User",
-                value: "USER",
-              },
-              {
-                label: "Agent",
-                value: "AGENT",
-              },
-            ]}
+            option={OPTION_ROLES}
             onChange={(e) => console.log(e.target.value)}
+            optionClassName="grid grid-cols-3"
           />
         )}
 

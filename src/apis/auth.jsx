@@ -13,3 +13,9 @@ export const apiLogin = (data) =>
     method: "POST",
     data,
   });
+
+export const apiGetRoles = () =>
+  axios({
+    url: "/user/roles",
+    method: "GET",
+  });

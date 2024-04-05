@@ -5,6 +5,7 @@ import { twMerge } from "tailwind-merge";
 const InputRadio = ({
   style = "form-radio",
   containerClassName,
+  optionClassName,
   label,
   id,
   register,
@@ -24,25 +25,27 @@ const InputRadio = ({
       <label htmlFor={label} className="font-medium text-primary-700">
         {label}
       </label>
-      {option.map((elm, idx) => (
-        <div className="flex items-center cursor-pointer gap-4" key={idx}>
-          <input
-            type="radio"
-            name={id}
-            id={elm.value}
-            placeholder={placeholder}
-            className={twMerge(
-              clsx(style, "placeholder:text-sm", inputClassName)
-            )}
-            {...register(id, validate)}
-            value={elm.value}
-            onChange={onchange}
-          />
-          <label htmlFor={elm.value} className="font-medium text-primary-700">
-            {elm.label}
-          </label>
-        </div>
-      ))}
+      <div className={twMerge(clsx(optionClassName))}>
+        {option.map((elm, idx) => (
+          <div className="flex items-center cursor-pointer gap-4" key={idx}>
+            <input
+              type="radio"
+              name={id}
+              id={elm.value}
+              placeholder={placeholder}
+              className={twMerge(
+                clsx(style, "placeholder:text-sm", inputClassName)
+              )}
+              {...register(id, validate)}
+              value={elm.value}
+              onChange={onChange}
+            />
+            <label htmlFor={elm.value} className="font-medium text-primary-700">
+              {elm.label}
+            </label>
+          </div>
+        ))}
+      </div>
 
       {error && <small className="text-red-400 ">{error[id]?.message}</small>}
     </div>
