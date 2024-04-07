@@ -1,18 +1,20 @@
 import clsx from "clsx";
 import React from "react";
 import { twMerge } from "tailwind-merge";
-
-const InputForm = ({
-  style = "form-input",
-  containerClassName,
+const TextArea = ({
   label,
   id,
+  rows = 5,
   type = "text",
+  placeholder,
+  //
+  style = "form-input",
+  containerClassName,
+  //
   register,
   error,
   inputClassName,
   validate,
-  placeholder,
 }) => {
   return (
     <div
@@ -25,16 +27,17 @@ const InputForm = ({
           {label}
         </label>
       )}
-      <input
+      <textarea
         type={type}
         id={id}
         placeholder={placeholder}
         className={twMerge(clsx(style, "placeholder:text-sm", inputClassName))}
         {...register(id, validate)}
+        rows={rows}
       />
       {error && <small className="text-red-400 ">{error[id]?.message}</small>}
     </div>
   );
 };
 
-export default InputForm;
+export default TextArea;

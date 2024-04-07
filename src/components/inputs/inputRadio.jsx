@@ -3,16 +3,18 @@ import React from "react";
 import { twMerge } from "tailwind-merge";
 
 const InputRadio = ({
+  label,
+  id,
+  placeholder,
+  //
   style = "form-radio",
   containerClassName,
   optionClassName,
-  label,
-  id,
+  inputClassName,
+  //
   register,
   error,
-  inputClassName,
   validate,
-  placeholder,
   option = [],
   onChange,
 }) => {
