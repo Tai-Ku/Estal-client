@@ -12,7 +12,7 @@ export const useUserStore = create(
       setToken: (token) => set(() => ({ token })),
       getProFileUser: async () => {
         const res = await apiGetProfileUser();
-        if (res.success) return set(() => ({ user: res.user }));
+        if (res?.success) return set(() => ({ user: res.user }));
         else return set(() => ({ user: null, token: null }));
       },
       getRoles: async () => {

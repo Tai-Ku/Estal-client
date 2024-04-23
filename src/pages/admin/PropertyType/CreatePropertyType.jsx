@@ -1,24 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, InputFile, InputForm, Title } from "~/components";
 import { CiCirclePlus } from "react-icons/ci";
 import { useForm } from "react-hook-form";
 import TextArea from "~/components/inputs/TextArea";
+import { apiCreateNewPropertyType } from "~/apis/propertyType";
+import { toast } from "react-toastify";
 
 const CreatePropertyType = () => {
   const {
     register,
     formState: { errors },
     handleSubmit,
+    setValue,
+    reset,
   } = useForm();
 
-  const handleCreateNewPropertyType = (data) => {
-    console.log(data);
+  const [error, setError] = useState("");
+
+  const handleCreateNewPropertyType = async (data) => {
+    if (data.images.length === 0) {
+      return setError("This field is required");
+    }
+    const { images, ...payload } = data;
+    const res = await apiCreateNewPropertyType({
+      ...payload,
+      image: images[0],
+    });
+
+    if (res.success) {
+      toast.success(res.message);
+      setValue("images", []);
+      reset();
+    }
   };
 
   return (
     <div className="bg-grays-100">
       <Title title="Create New Property Type">
-        <Button onClick={handleSubmit(handleCreateNewPropertyType)}>
+        <Button
+          className="font-semibold"
+          onClick={handleSubmit(handleCreateNewPropertyType)}
+        >
           <CiCirclePlus size={20} />
           Create
         </Button>
@@ -46,12 +68,19 @@ const CreatePropertyType = () => {
         />
 
         <InputFile
-          id="image"
+          id="images"
           label="Image"
           //
           register={register}
-          error={errors}
           validate={{ required: "This field Cannot empty" }}
+          getImages={(images) => {
+            setValue(
+              "images",
+              images?.map((i) => i.path)
+            );
+            images.length > 0 && setError("");
+          }}
+          error={error}
         />
       </form>
     </div>
