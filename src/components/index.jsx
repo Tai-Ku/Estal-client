@@ -14,3 +14,4 @@ export { default as InputFile } from "./inputs/InputFile";
 
 //
 export { default as AdminSidebar } from "./sidebars/AdminSidebar";
+export { default as VerifierOtp } from "./auth/VerifierOtp";

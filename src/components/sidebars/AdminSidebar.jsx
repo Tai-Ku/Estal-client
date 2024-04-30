@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import React, { Fragment, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { adminSidebar } from "~/untils/constant";
-import { FaCaretDown, FaCaretLeft, FaCaretRight } from "react-icons/fa";
+import { FaCaretDown, FaCaretRight } from "react-icons/fa";
 
 const AdminSidebar = () => {
   const [activeTabs, setActiveTabs] = useState([]);
@@ -15,12 +15,12 @@ const AdminSidebar = () => {
     }
   };
 
-  console.log({ activeTabs });
-
   return (
     <div className=" w-full h-screen">
       <div className="w-full p-4 flex flex-col items-center gap-4">
-        <img src="/logo1.png" alt="logo" className="3/5 object-contain" />
+        <Link to="/" className="cursor-pointer">
+          <img src="/logo1.png" alt="logo" className="3/5 object-contain" />
+        </Link>
         <span className="text-red-100 italic">Admin workspace</span>
       </div>
       <div className="mt-6">
