@@ -20,6 +20,7 @@ export const useUserStore = create(
         if (res.success) return set(() => ({ roles: res.roles }));
         else return set(() => ({ roles: [] }));
       },
+      logOut: () => set(() => ({ token: null, user: null })),
     }),
     {
       name: "rest-06",

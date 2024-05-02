@@ -2,7 +2,7 @@ import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import { Button, InputForm, InputRadio, VerifierOtp } from "..";
 import { useForm } from "react-hook-form";
-import { apiGetRoles, apiLogin, apiRegister } from "~/apis/auth";
+import { apiLogin, apiRegister } from "~/apis/auth";
 import { toast } from "react-toastify";
 import { useAppStore } from "~/store/useAppStore";
 import { useUserStore } from "~/store/useUserStore";

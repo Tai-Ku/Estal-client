@@ -20,6 +20,7 @@ import {
   Dashboard,
   ManagePropertyType,
 } from "./pages/admin";
+import { LayoutUser, Personal } from "./pages/user";
 
 function App() {
   const { isShowModal } = useAppStore();
@@ -45,7 +46,7 @@ function App() {
 
         {/* Admin Router */}
         <Route path={path.ADMIN_LAYOUT} element={<AdminLayout />}>
-          <Route path={path.DASHBOARD} element={<Dashboard />} />
+          <Route path={path.ADMIN_DASHBOARD} element={<Dashboard />} />
           <Route
             path={path.CREATE_PROPERTY_TYPE}
             element={<CreatePropertyType />}
@@ -54,6 +55,11 @@ function App() {
             path={path.MANAGE_PROPERTY_TYPE}
             element={<ManagePropertyType />}
           />
+        </Route>
+
+        {/* User Routers */}
+        <Route path={path.USER_LAYOUT} element={<LayoutUser />}>
+          <Route path={path.PERSONAL} element={<Personal />} />
         </Route>
       </Routes>
       <ToastContainer

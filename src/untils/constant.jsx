@@ -33,7 +33,7 @@ export const adminSidebar = [
   {
     id: 12,
     name: "Dashboard",
-    path: `/${path.ADMIN_LAYOUT}/${path.DASHBOARD}`,
+    path: `/${path.ADMIN_LAYOUT}/${path.ADMIN_DASHBOARD}`,
     icon: <RiDashboardFill />,
     type: "SINGLE",
   },
@@ -55,5 +55,32 @@ export const adminSidebar = [
         name: "Manage",
       },
     ],
+  },
+];
+
+export const userOptions = [
+  {
+    id: 1,
+    name: "Personal",
+    code: "ROL7",
+    path: `/${path.USER_LAYOUT}/${path.PERSONAL}`,
+  },
+  {
+    id: 2,
+    name: "AGENT",
+    code: "ROL5",
+    path: `/${path.AGENT_LAYOUT}/${path.AGENT_DASHBOARD}`,
+  },
+  {
+    id: 3,
+    name: "OWNER",
+    code: "ROL3",
+    path: `/${path.OWNER_LAYOUT}/${path.OWNER_DASHBOARD}`,
+  },
+  {
+    id: 4,
+    name: "ADMIN",
+    code: "ROL1",
+    path: `/${path.ADMIN_LAYOUT}/${path.DASHBOARD}`,
   },
 ];
